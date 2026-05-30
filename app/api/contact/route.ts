@@ -1,15 +1,14 @@
 import { Resend } from "resend";
 import { NextResponse } from "next/server";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
-// From address must be on a domain verified in your Resend account.
-// During development you can use "onboarding@resend.dev" (Resend's shared sender).
-// For production, set this to e.g. "website@annawittich.com" once the domain is verified.
-const FROM = process.env.RESEND_FROM ?? "Anna Wittich Website <onboarding@resend.dev>";
 const TO = "anna.lena.wittich@gmail.com";
 
 export async function POST(req: Request) {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    return NextResponse.json({ ok: false, error: "Not configured" }, { status: 503 });
+  }
+
   try {
     const body = await req.json().catch(() => ({}));
     const { name, email, affiliation, inquiry } = body as Record<string, string>;
@@ -18,8 +17,11 @@ export async function POST(req: Request) {
       return NextResponse.json({ ok: false, error: "Missing required fields" }, { status: 400 });
     }
 
+    const from = process.env.RESEND_FROM ?? "Anna Wittich Website <onboarding@resend.dev>";
+    const resend = new Resend(apiKey);
+
     await resend.emails.send({
-      from: FROM,
+      from,
       to: TO,
       replyTo: email,
       subject: `New inquiry from ${name}${affiliation ? ` — ${affiliation}` : ""}`,
