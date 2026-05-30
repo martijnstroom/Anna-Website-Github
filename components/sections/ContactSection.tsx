@@ -15,15 +15,18 @@ export function ContactSection() {
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    const form = e.currentTarget;
     setStatus("sending");
     try {
-      await fetch("/api/contact", {
+      const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(Object.fromEntries(new FormData(e.currentTarget))),
+        body: JSON.stringify(Object.fromEntries(new FormData(form))),
       });
+      const data = await res.json();
+      if (!data.ok) throw new Error(data.error);
       setStatus("sent");
-      e.currentTarget.reset();
+      form.reset();
     } catch {
       setStatus("error");
     }
