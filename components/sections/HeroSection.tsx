@@ -11,28 +11,27 @@ export function HeroSection() {
   return (
     <header
       id="top"
-      className="relative min-h-screen md:min-h-[700px] flex items-center pt-24 pb-24 overflow-hidden"
+      className="relative overflow-hidden md:min-h-[700px] md:flex md:items-center md:pt-24 md:pb-24"
     >
-      {/* Portrait — landscape image on the LEFT, text on the right */}
-      <div className="absolute left-0 top-20 bottom-0 w-full md:w-3/5 z-0">
-        <div className="absolute inset-0">
-          <div className="relative w-full h-full">
-            <Image
-              src={h.portrait.src}
-              alt={h.portrait.alt}
-              fill
-              priority
-              sizes="(max-width: 768px) 100vw, 60vw"
-              className="object-cover object-[50%_25%] hero-portrait"
-            />
-          </div>
-        </div>
-        {/* Mobile: covers left (text overlay). Desktop: only right edge fades — mirrors the original md:via-transparent trick. */}
-        <div className="absolute inset-0 bg-gradient-to-r from-surface via-surface/60 to-transparent md:bg-gradient-to-l md:via-surface/25" />
+      {/* Portrait — in-flow on mobile (full-bleed), absolutely positioned on desktop */}
+      <div className="relative h-[56vh] min-h-[300px] w-full md:absolute md:left-0 md:top-20 md:bottom-0 md:h-auto md:w-3/5 md:z-0">
+        <Image
+          src={h.portrait.src}
+          alt={h.portrait.alt}
+          fill
+          priority
+          sizes="(max-width: 768px) 100vw, 60vw"
+          className="object-cover object-[50%_25%] hero-portrait"
+        />
+        {/* Mobile: gentle fade at the bottom so portrait blends into text section */}
+        <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-surface to-transparent md:hidden" />
+        {/* Desktop: right-edge fade so overlapping text stays readable */}
+        <div className="hidden md:block absolute inset-0 bg-gradient-to-l from-surface via-surface/25 to-transparent" />
       </div>
 
-      <div className="relative z-10 w-full px-margin-edge md:pl-[55%] md:pr-[4vw]">
-        <h1 className="font-display text-display-lg leading-[0.833] uppercase text-primary mix-blend-multiply md:mix-blend-normal">
+      {/* Text — below image on mobile, floated right on desktop */}
+      <div className="relative z-10 w-full px-margin-edge pt-4 pb-16 md:pt-0 md:pb-0 md:pl-[55%] md:pr-[4vw]">
+        <h1 className="font-display text-display-lg leading-[0.833] uppercase text-primary">
           {h.prefixLines.slice(0, -1).map((line, i) => (
             <span key={i} className="block">
               {line}

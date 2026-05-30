@@ -13,7 +13,7 @@ export function PressSection() {
     <SectionBand tone="primary" id="press" padTop={false} padBottom={false} className="py-10 md:py-14">
       <div className="grid grid-cols-12 gap-gutter max-w-screen-2xl mx-auto">
         {/* Left: portrait — stretches to match quotes column height */}
-        <div className="col-span-12 md:col-span-5 relative h-64 md:h-auto md:self-stretch overflow-hidden">
+        <div className="col-span-12 md:col-span-5 relative h-80 md:h-auto md:self-stretch overflow-hidden">
           <Image
             src="/images/anna-aboutme.jpg"
             alt="Dr. Anna Wittich in conversation"
