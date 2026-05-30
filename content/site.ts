@@ -198,8 +198,8 @@ const en: SiteContent = {
     tagline: "ARCHITECTING LABOR MARKETS.",
     links: [
       { label: "LinkedIn", href: "https://www.linkedin.com/in/annawittich/" },
-      { label: "Imprint", href: "#" },
-      { label: "Privacy", href: "#" },
+     // { label: "Imprint", href: "#" },
+     // { label: "Privacy", href: "#" },
     ],
     meta: {
       copyright: "© 2026 DR. ANNA-LENA WITTICH.",
@@ -314,8 +314,8 @@ const de: SiteContent = {
     tagline: "DEN ARBEITSMARKT GESTALTEN.",
     links: [
       { label: "LinkedIn", href: en.footer.links[0].href },
-      { label: "Impressum", href: en.footer.links[1].href },
-      { label: "Datenschutz", href: en.footer.links[2].href },
+     // { label: "Impressum", href: en.footer.links[1].href },
+     // { label: "Datenschutz", href: en.footer.links[2].href },
     ],
     meta: {
       copyright: "© 2026 DR. ANNA-LENA WITTICH.",
