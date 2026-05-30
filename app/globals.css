@@ -1,0 +1,154 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: theme("colors.surface");
+  color: theme("colors.primary");
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- Motion primitives ---------- */
+
+@keyframes shimmer {
+  to {
+    background-position: 200% center;
+  }
+}
+
+.shimmer-text {
+  background: linear-gradient(90deg, #fef8f4 0%, #ffffff 50%, #fef8f4 100%);
+  background-size: 200% auto;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: shimmer 5s linear infinite;
+}
+
+.glass-nav {
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+
+/* Reveal-up: opacity + lift, triggered by .is-visible class */
+.reveal-up {
+  opacity: 0;
+  transform: translateY(60px) scale(0.97);
+  transition:
+    opacity 1.4s cubic-bezier(0.2, 1, 0.3, 1),
+    transform 1.4s cubic-bezier(0.2, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+.reveal-up.is-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+.reveal-up.delay-150 {
+  transition-delay: 150ms;
+}
+.reveal-up.delay-300 {
+  transition-delay: 300ms;
+}
+.reveal-up.delay-450 {
+  transition-delay: 450ms;
+}
+
+/* Mask-image: clip-path wipe from bottom to full */
+.mask-image {
+  clip-path: inset(100% 0 0 0);
+  transition: clip-path 1.8s cubic-bezier(0.7, 0, 0.3, 1);
+  will-change: clip-path;
+}
+.mask-image.is-visible {
+  clip-path: inset(0 0 0 0);
+}
+
+/* Hairline grow: 0 → 100% width */
+.hairline-grow {
+  height: 1px;
+  background-color: theme("colors.deep-obsidian");
+  width: 0;
+  transition: width 1.2s ease-in-out;
+}
+.hairline-grow.is-visible {
+  width: 100%;
+}
+
+/* Cycling word: stacked spans rotated in via opacity + translateY.
+   The invisible sizer span sets the container width (longest word).
+   All slots are position:absolute so only the sizer drives inline size. */
+.cycling-word {
+  position: relative;
+  display: inline-block;
+  vertical-align: baseline;
+}
+.cycling-word__slot {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: translateY(30px);
+  transition:
+    opacity 0.6s cubic-bezier(0.65, 0, 0.35, 1),
+    transform 0.6s cubic-bezier(0.65, 0, 0.35, 1);
+}
+.cycling-word__slot--active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Horizontal mirror — used for hero portrait2 so subject faces the text */
+.mirror-x { transform: scaleX(-1); }
+
+/* Hero portrait: simple fade-in, no scale transform */
+@keyframes hero-portrait-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.hero-portrait {
+  animation: hero-portrait-in 1.4s ease-out forwards;
+}
+
+/* Reduced motion: disable every page-level animation */
+@media (prefers-reduced-motion: reduce) {
+  .reveal-up,
+  .mask-image {
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: none !important;
+    transition: none !important;
+  }
+  .hairline-grow {
+    width: 100% !important;
+    transition: none !important;
+  }
+  .hero-portrait {
+    animation: none !important;
+    opacity: 1 !important;
+  }
+  .shimmer-text {
+    animation: none !important;
+    background: none;
+    color: theme("colors.paper-white");
+    -webkit-text-fill-color: currentColor;
+  }
+  .cycling-word__slot {
+    transition: none !important;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Focus visibility — the mockup defines none. Add a bronze ring. */
+:where(a, button, input, textarea, select):focus-visible {
+  outline: 2px solid theme("colors.bronze-accent");
+  outline-offset: 3px;
+}
