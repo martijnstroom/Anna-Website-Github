@@ -12,6 +12,7 @@ export function ContactSection() {
   const { content } = useLocale();
   const c = content.contact;
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const sent = status === "sent";
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -40,11 +41,12 @@ export function ContactSection() {
       padBottom={false}
       className="!px-0 overflow-hidden"
     >
-      <div className="max-w-screen-xl mx-auto grid grid-cols-12">
+      <div
+        className={`contact-section-wrap max-w-screen-xl mx-auto${sent ? " is-sent" : ""}`}
+      >
 
         {/* ── Left panel: full-bleed portrait with text overlay ── */}
-        <div className="relative col-span-12 lg:col-span-5 min-h-[420px] lg:min-h-0 overflow-hidden">
-          {/* Portrait fills the panel */}
+        <div className="contact-portrait-panel relative min-h-[420px] lg:min-h-0 overflow-hidden">
           <Image
             src="/images/anna-portrait.jpg"
             alt="Dr. Anna Wittich"
@@ -52,7 +54,6 @@ export function ContactSection() {
             className="object-cover object-top"
           />
 
-          {/* Gradient: transparent at top → solid primary at bottom */}
           <div
             className="absolute inset-0"
             style={{
@@ -61,9 +62,7 @@ export function ContactSection() {
             }}
           />
 
-          {/* Text floats over the gradient bottom */}
           <div className="absolute bottom-0 left-0 right-0 px-8 md:px-10 lg:px-12 pb-10 lg:pb-12">
-            {/* Bronze hairline */}
             <div className="w-10 h-px bg-bronze-accent mb-6" aria-hidden />
 
             <h2 className="font-display text-display-lg leading-[0.833] uppercase mb-6">
@@ -81,41 +80,43 @@ export function ContactSection() {
               />
             </h2>
 
-            <p className="font-body text-body-md text-paper-white/65 leading-relaxed max-w-xs">
-              {c.intro}
-            </p>
+            {!sent && (
+              <p className="font-body text-body-md text-paper-white/65 leading-relaxed max-w-xs">
+                {c.intro}
+              </p>
+            )}
+
+            {sent && (
+              <p className="contact-message-received font-label text-[12px] uppercase tracking-[0.2em] text-bronze-accent">
+                Message received.
+              </p>
+            )}
           </div>
         </div>
 
         {/* ── Right panel: form ── */}
-        <div className="col-span-12 lg:col-span-7 px-margin-edge lg:px-14 py-14 lg:py-16">
-          <form onSubmit={onSubmit} className="space-y-14" noValidate>
-            {c.fields.map((f) => (
-              <FormField key={f.name} field={f} dark />
-            ))}
+        <div className="contact-form-panel" aria-hidden={sent}>
+          <div className="px-margin-edge lg:px-14 py-14 lg:py-16">
+            <form onSubmit={onSubmit} className="space-y-14" noValidate>
+              {c.fields.map((f) => (
+                <FormField key={f.name} field={f} dark />
+              ))}
 
-            <div className="flex flex-col gap-4 items-start pt-2">
-              <Button type="submit" widenSpacingOnHover fullWidthOnMobile>
-                {status === "sending" ? "Sending…" : c.submitLabel}
-              </Button>
-              {status === "sent" && (
-                <p
-                  role="status"
-                  className="font-label text-[12px] uppercase tracking-[0.2em] text-bronze-accent"
-                >
-                  Message received.
-                </p>
-              )}
-              {status === "error" && (
-                <p
-                  role="status"
-                  className="font-label text-[12px] uppercase tracking-[0.2em] text-bronze-accent"
-                >
-                  Something went wrong. Please try again.
-                </p>
-              )}
-            </div>
-          </form>
+              <div className="flex flex-col gap-4 items-start pt-2">
+                <Button type="submit" widenSpacingOnHover fullWidthOnMobile>
+                  {status === "sending" ? "Sending…" : c.submitLabel}
+                </Button>
+                {status === "error" && (
+                  <p
+                    role="status"
+                    className="font-label text-[12px] uppercase tracking-[0.2em] text-bronze-accent"
+                  >
+                    Something went wrong. Please try again.
+                  </p>
+                )}
+              </div>
+            </form>
+          </div>
         </div>
 
       </div>
