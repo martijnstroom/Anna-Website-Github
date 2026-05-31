@@ -19,7 +19,7 @@ export function PressSection() {
             alt="Dr. Anna Wittich in conversation"
             fill
             sizes="(max-width: 768px) 100vw, 42vw"
-            className="object-cover object-center"
+            className="object-cover object-[50%_20%]"
           />
         </div>
 
