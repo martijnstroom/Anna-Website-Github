@@ -101,9 +101,10 @@ export type SiteContent = {
 };
 
 // Canonical production origin. Override at deploy time via NEXT_PUBLIC_SITE_URL.
+// Host redirects apex → www, so canonical lives on www. Keep them aligned.
 export const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ||
-  "https://annawittich.com";
+  "https://www.annawittich.com";
 
 const heroPortrait = {
   src: "/images/anna-portrait2.jpg",
