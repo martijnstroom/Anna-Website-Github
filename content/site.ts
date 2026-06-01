@@ -54,6 +54,30 @@ export type FooterContent = {
   meta: { copyright: string; rightLabel: string };
 };
 
+export type SeoBlock = {
+  // Title used by <title> and og:title. Keep <= 60 chars for SERPs.
+  title: string;
+  // Meta description + og:description. Keep 150-160 chars.
+  description: string;
+  // Keywords (used by some engines and as a soft signal).
+  keywords: string[];
+  // Alt text for the generated OG image.
+  ogImageAlt: string;
+  // Person schema fields — feed Google's Knowledge Graph.
+  person: {
+    name: string;
+    givenName: string;
+    familyName: string;
+    honorificPrefix: string;
+    jobTitle: string;
+    affiliation: string;
+    description: string;
+    sameAs: string[];
+    alumniOf: string[];
+    knowsAbout: string[];
+  };
+};
+
 export type SiteContent = {
   meta: { title: string; description: string };
   brand: { wordmark: string; languageToggleLabel: string };
@@ -65,7 +89,13 @@ export type SiteContent = {
   publications: { eyebrow: string; items: Publication[] };
   contact: Contact;
   footer: FooterContent;
+  seo: SeoBlock;
 };
+
+// Canonical production origin. Override at deploy time via NEXT_PUBLIC_SITE_URL.
+export const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ||
+  "https://annawittich.com";
 
 const heroPortrait = {
   src: "/images/anna-portrait2.jpg",
@@ -206,6 +236,51 @@ const en: SiteContent = {
       rightLabel: "DESIGNED FOR PRECISION - by Porthos Studio",
     },
   },
+  seo: {
+    title: "Dr. Anna Wittich — Labor Market Researcher | Future of Work",
+    description:
+      "Dr. Anna Wittich is a labor economist researching automation, AI, recruiting, and the future of work. Independent insights for press, speaking, and consulting.",
+    keywords: [
+      "Anna Wittich",
+      "Dr. Anna Wittich",
+      "Anna-Lena Wittich",
+      "labor market researcher",
+      "labor economist",
+      "future of work",
+      "automation and jobs",
+      "AI and labor market",
+      "recruiting research",
+      "job satisfaction",
+      "Stepstone research",
+      "workforce trends",
+      "labor market expert Germany",
+      "Arbeitsmarktforschung",
+    ],
+    ogImageAlt: "Dr. Anna Wittich — Architecting Labor Markets",
+    person: {
+      name: "Dr. Anna-Lena Wittich",
+      givenName: "Anna-Lena",
+      familyName: "Wittich",
+      honorificPrefix: "Dr.",
+      jobTitle: "Labor Market Research Manager",
+      affiliation: "The Stepstone Group",
+      description:
+        "Labor economist and labor market research manager at The Stepstone Group. Research focus: job search, recruiting, automation, AI, and job satisfaction.",
+      sameAs: [
+        "https://www.linkedin.com/in/annawittich/",
+        "https://ssrn.com/author=5805655",
+      ],
+      alumniOf: ["Maastricht University"],
+      knowsAbout: [
+        "Labor economics",
+        "Future of work",
+        "Automation and workforce training",
+        "Recruiting and hiring",
+        "Job satisfaction",
+        "Hybrid work",
+      ],
+    },
+  },
 };
 
 const de: SiteContent = {
@@ -321,6 +396,13 @@ const de: SiteContent = {
       copyright: "© 2026 DR. ANNA-LENA WITTICH.",
       rightLabel: "DESIGNED FOR PRECISION – by Porthos Studio",
     },
+  },
+  seo: {
+    ...en.seo,
+    title: "Dr. Anna Wittich — Arbeitsmarktforscherin | Zukunft der Arbeit",
+    description:
+      "Dr. Anna Wittich ist Arbeitsökonomin und forscht zu Automatisierung, KI, Recruiting und der Zukunft der Arbeit. Unabhängige Einblicke für Presse, Vorträge und Beratung.",
+    ogImageAlt: "Dr. Anna Wittich — Den Arbeitsmarkt gestalten",
   },
 };
 

@@ -1,11 +1,15 @@
 "use client";
 
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import { useLocale } from "@/lib/locale";
 
 export function TopNavBar() {
-  const { locale, toggle, content } = useLocale();
+  const { locale, content } = useLocale();
   const [open, setOpen] = useState(false);
+  const pathname = usePathname() || "/";
+  const onDe = pathname.startsWith("/de");
+  const toggleHref = onDe ? "/" : "/de";
 
   return (
     <nav
@@ -30,10 +34,9 @@ export function TopNavBar() {
               {n.label}
             </a>
           ))}
-          <button
-            type="button"
-            onClick={toggle}
-            aria-pressed={locale === "en"}
+          <a
+            href={toggleHref}
+            hrefLang={onDe ? "en" : "de"}
             aria-label={content.brand.languageToggleLabel}
             className="font-label text-[12px] leading-4 font-bold uppercase tracking-[0.2em] text-bronze-accent ml-8 border-b border-bronze-accent pb-1"
           >
@@ -46,7 +49,7 @@ export function TopNavBar() {
                 <span className="underline underline-offset-4">DE</span>/EN
               </>
             )}
-          </button>
+          </a>
         </div>
 
         <button
@@ -75,10 +78,10 @@ export function TopNavBar() {
               {n.label}
             </a>
           ))}
-          <button
-            type="button"
-            onClick={toggle}
-            aria-pressed={locale === "en"}
+          <a
+            href={toggleHref}
+            hrefLang={onDe ? "en" : "de"}
+            onClick={() => setOpen(false)}
             className="font-label text-[12px] leading-4 font-bold uppercase tracking-[0.2em] text-bronze-accent self-start"
           >
             {locale === "en" ? (
@@ -90,7 +93,7 @@ export function TopNavBar() {
                   <span className="underline underline-offset-4">DE</span>/EN
                 </>
               )}
-          </button>
+          </a>
         </div>
       )}
     </nav>

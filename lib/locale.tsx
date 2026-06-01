@@ -12,8 +12,14 @@ type LocaleCtx = {
 
 const Ctx = createContext<LocaleCtx | null>(null);
 
-export function LocaleProvider({ children }: { children: React.ReactNode }) {
-  const [locale, setLocaleState] = useState<Locale>(defaultLocale);
+export function LocaleProvider({
+  children,
+  initialLocale,
+}: {
+  children: React.ReactNode;
+  initialLocale?: Locale;
+}) {
+  const [locale, setLocaleState] = useState<Locale>(initialLocale ?? defaultLocale);
 
   // Reflect locale on <html lang> for assistive tech and CSS hooks.
   useEffect(() => {

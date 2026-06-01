@@ -1,25 +1,33 @@
-import { TopNavBar } from "@/components/layout/TopNavBar";
-import { Footer } from "@/components/layout/Footer";
-import { HeroSection } from "@/components/sections/HeroSection";
-import { ExpertiseSection } from "@/components/sections/ExpertiseSection";
-import { PressSection } from "@/components/sections/PressSection";
-import { AboutSection } from "@/components/sections/AboutSection";
-import { PublicationsSection } from "@/components/sections/PublicationsSection";
-import { ContactSection } from "@/components/sections/ContactSection";
+import type { Metadata } from "next";
+import { SiteShell } from "@/components/SiteShell";
+import { site, siteUrl } from "@/content/site";
+
+const en = site.en;
+
+export const metadata: Metadata = {
+  title: { absolute: en.seo.title },
+  description: en.seo.description,
+  alternates: {
+    canonical: "/",
+    languages: {
+      "en-US": `${siteUrl}/`,
+      "de-DE": `${siteUrl}/de`,
+      "x-default": `${siteUrl}/`,
+    },
+  },
+  openGraph: {
+    title: en.seo.title,
+    description: en.seo.description,
+    url: `${siteUrl}/`,
+    locale: "en_US",
+    alternateLocale: ["de_DE"],
+  },
+  twitter: {
+    title: en.seo.title,
+    description: en.seo.description,
+  },
+};
 
 export default function Page() {
-  return (
-    <>
-      <TopNavBar />
-      <main>
-        <HeroSection />
-        <ExpertiseSection />
-        <PressSection />
-        <AboutSection />
-        <PublicationsSection />
-        <ContactSection />
-      </main>
-      <Footer />
-    </>
-  );
+  return <SiteShell locale="en" />;
 }
