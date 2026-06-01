@@ -13,7 +13,15 @@ export type Hero = {
   subtext?: string;
 };
 
-export type ExpertiseQuestion = { number: string; text: string };
+export type ExpertiseQuestion = {
+  number: string;
+  text: string;
+  // Optional plain-text answer. When present, the page emits FAQPage JSON-LD
+  // for this question — eligible for rich results in Google SERPs.
+  // Keep answers 2–4 sentences, grounded in real positions / publications.
+  // Leave undefined to skip schema emission for this item.
+  answer?: string;
+};
 
 export type PressStat = {
   eyebrow: string;
@@ -131,14 +139,23 @@ const en: SiteContent = {
       {
         number: "01",
         text: "What is the current state and future of work: trends, challenges, & oppurtunities on the labor market.",
+        // DRAFT — refine with Anna before deploy.
+        answer:
+          "The German labor market is shifting structurally: skill shortages persist in high-demand fields while expectations around flexibility, hybrid work, and meaningful work are reshaping employer–employee relationships. My research at The Stepstone Group tracks how careers, hiring, and workplace conditions are evolving in real time, using large-scale data on job seekers and employers.",
       },
       {
         number: "02",
         text: "Is your job at risk of automation? Let's talk about training and adoptation.",
+        // DRAFT — refine with Anna before deploy.
+        answer:
+          "Automation risk is real but unevenly distributed, and workers' perceptions of that risk often don't match the data. My research on the automation training gap shows that when workers accurately perceive their exposure, they engage more with training — but information has to be framed carefully to drive action rather than fatalism.",
       },
       {
         number: "03",
         text: "Does AI improve or challenge our workload, and how does this effect job oppurtunities, hiring, and firing?",
+        // DRAFT — refine with Anna before deploy.
+        answer:
+          "AI changes which tasks are automatable, which skills companies hire for, and how application processes work. The effects on hiring and firing are more nuanced than headlines suggest: some roles compress, others expand, and recruiting itself is being rebuilt. My work examines how labor market information shapes the decisions of both employers and candidates as AI adoption accelerates.",
       },
     ],
   },
@@ -241,22 +258,59 @@ const en: SiteContent = {
     description:
       "Dr. Anna Wittich is a labor economist researching automation, AI, recruiting, and the future of work. Independent insights for press, speaking, and consulting.",
     keywords: [
+      // Name variants — every form someone might Google
       "Anna Wittich",
+      "Anna-Lena Wittich",
+      "Anna Lena Wittich",
+      "Lena Wittich",
+      "Anna-Lena Wittich, PhD",
+      "Anna Wittich, PhD",
       "Dr. Anna Wittich",
       "Anna-Lena Wittich",
+      "Dr. Anna-Lena Wittich",
+      "Wittich Stepstone",
+      "Anna Wittich Stepstone",
+      "Anna Wittich Maastricht",
+      // Role / title
       "labor market researcher",
+      "labor market Expert",
+      "job market researcher",
+      "job market Expert",
       "labor economist",
+      "labor market research manager",
+      "Arbeitsökonomin",
+      "Arbeitsmarktforscherin",
+      // Topical authority — what she's quoted on
       "future of work",
+      "Zukunft der Arbeit",
       "automation and jobs",
+      "automation training gap",
       "AI and labor market",
+      "KI Arbeitsmarkt",
       "recruiting research",
-      "job satisfaction",
+      "hiring research",
+      "job satisfaction research",
+      "salary negotiation research",
+      "entry-level salary Germany",
+      "Einstiegsgehalt Deutschland",
+      "apprenticeship Germany",
+      "Ausbildung Arbeitsmarkt",
+      "hybrid work research",
+      "digital communication overload",
+      "workforce trends Germany",
+      // Institutional / press
       "Stepstone research",
-      "workforce trends",
+      "Stepstone Insights",
+      "The Stepstone Group research",
+      "Maastricht University labor economics",
+      // Speaker / consulting intent
       "labor market expert Germany",
-      "Arbeitsmarktforschung",
+      "future of work speaker",
+      "Arbeitsmarkt Expertin",
+      "labor market keynote speaker",
+      "labor market consultant",
     ],
-    ogImageAlt: "Dr. Anna Wittich — Architecting Labor Markets",
+    ogImageAlt: "Dr. Anna Wittich — Labor Markets Expert",
     person: {
       name: "Dr. Anna-Lena Wittich",
       givenName: "Anna-Lena",
@@ -268,7 +322,7 @@ const en: SiteContent = {
         "Labor economist and labor market research manager at The Stepstone Group. Research focus: job search, recruiting, automation, AI, and job satisfaction.",
       sameAs: [
         "https://www.linkedin.com/in/annawittich/",
-        "https://ssrn.com/author=5805655",
+        "https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=9278547",
       ],
       alumniOf: ["Maastricht University"],
       knowsAbout: [
@@ -313,14 +367,21 @@ const de: SiteContent = {
       {
         number: "01",
         text: "Wie steht es um die Zukunft der Arbeit? Trends, Herausforderungen und Chancen auf dem Arbeitsmarkt.",
+        // ENTWURF — vor Veröffentlichung mit Anna abstimmen.
+        answer:
+          "Der deutsche Arbeitsmarkt verändert sich strukturell: Fachkräftemangel besteht in vielen Bereichen fort, während sich Erwartungen an Flexibilität, hybrides Arbeiten und sinnstiftende Arbeit grundlegend wandeln. Meine Forschung bei The Stepstone Group verfolgt diese Entwicklungen in Echtzeit anhand großer Datensätze zu Jobsuchenden und Unternehmen.",
       },
       {
         number: "02",
         text: "Ist Ihr Job durch Automatisierung gefährdet? Über Weiterbildung und Anpassungsfähigkeit.",
+        answer:
+          "Das Automatisierungsrisiko ist real, aber ungleich verteilt – und die Wahrnehmung der Arbeitnehmer stimmt oft nicht mit den Daten überein. Meine Forschung zur Automatisierungs-Weiterbildungslücke zeigt: Wer das eigene Risiko realistisch einschätzt, beteiligt sich stärker an Weiterbildung. Entscheidend ist, wie Informationen vermittelt werden.",
       },
       {
         number: "03",
         text: "Verbessert oder belastet KI unsere Arbeit – und welche Folgen hat das für Jobchancen, Einstellungen und Entlassungen?",
+        answer:
+          "KI verändert, welche Aufgaben automatisierbar sind, welche Kompetenzen gefragt sind und wie Bewerbungsprozesse funktionieren. Die Effekte auf Einstellungen und Entlassungen sind differenzierter, als Schlagzeilen vermuten lassen: Manche Rollen werden komprimiert, andere wachsen, und Recruiting selbst wird neu gedacht. Meine Arbeit untersucht, wie Arbeitsmarktinformationen die Entscheidungen von Arbeitgebern und Bewerbern prägen.",
       },
     ],
   },

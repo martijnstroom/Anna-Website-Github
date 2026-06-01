@@ -47,6 +47,29 @@ function PublicationsJsonLd({ locale }: { locale: Locale }) {
   );
 }
 
+function FaqJsonLd({ locale }: { locale: Locale }) {
+  const content = site[locale];
+  const qa = content.expertise.questions.filter((q) => q.answer && q.answer.trim().length > 0);
+  if (qa.length === 0) return null;
+  const json = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "@id": `${siteUrl}/${locale === "de" ? "de/" : ""}#faq`,
+    inLanguage: locale === "de" ? "de-DE" : "en-US",
+    mainEntity: qa.map((q) => ({
+      "@type": "Question",
+      name: q.text,
+      acceptedAnswer: { "@type": "Answer", text: q.answer },
+    })),
+  };
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(json) }}
+    />
+  );
+}
+
 function PressJsonLd({ locale }: { locale: Locale }) {
   const content = site[locale];
   const json = {
@@ -80,6 +103,7 @@ export function SiteShell({ locale }: { locale: Locale }) {
     <LocaleProvider initialLocale={locale}>
       <PublicationsJsonLd locale={locale} />
       <PressJsonLd locale={locale} />
+      <FaqJsonLd locale={locale} />
       <TopNavBar />
       <main>
         <HeroSection />
