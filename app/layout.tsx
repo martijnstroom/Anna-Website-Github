@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Bebas_Neue, Hanken_Grotesk } from "next/font/google";
 import { headers } from "next/headers";
+import { Analytics } from "@vercel/analytics/next";
 import { site, defaultLocale, siteUrl, type Locale } from "@/content/site";
 import "./globals.css";
 
@@ -149,6 +150,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <PersonJsonLd />
         <WebsiteJsonLd />
         {children}
+        <Analytics />
       </body>
     </html>
   );
