@@ -1,0 +1,8 @@
+name: Anna Website
+icon: person
+description: Anna Wittich portfolio site (Next.js dev server)
+type: fastapi-subprocess
+start: npm run dev
+port: 3001
+group: Other
+section: apps
