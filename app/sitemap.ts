@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { siteUrl } from "@/content/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const now = new Date();
+  const lastModified = new Date("2026-06-01");
   const alternates = {
     languages: {
       en: `${siteUrl}/`,
@@ -13,14 +13,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
       url: `${siteUrl}/`,
-      lastModified: now,
+      lastModified: lastModified,
       changeFrequency: "monthly",
       priority: 1,
       alternates,
     },
     {
       url: `${siteUrl}/de`,
-      lastModified: now,
+      lastModified: lastModified,
       changeFrequency: "monthly",
       priority: 1,
       alternates,
